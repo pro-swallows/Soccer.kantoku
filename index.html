@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>サッカークラブ監督シミュレーター</title>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet"><style>:root{--bg:#090e1b;--sf:#121b31;--tx:#f3f6fc;--mu:#8a97b4;--bd:#23304f;--gd:#ffcf33;--rd:#ff3b4e;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#090e1b}}
+:root[data-theme="dark"]{--bg:#090e1b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(120% 60% at 50% -10%,#1a2a55 0,var(--bg) 60%) fixed;color:var(--tx);font:14px/1.5 "Zen Kaku Gothic New","Hiragino Sans",sans-serif;-webkit-tap-highlight-color:transparent}
+#app{max-width:560px;margin:0 auto;padding:10px 10px calc(84px + env(safe-area-inset-bottom,0px))}
+h1{font:400 26px "Dela Gothic One",sans-serif;margin:8px 2px}h1 small{display:block;font:700 11px "Zen Kaku Gothic New";color:var(--gd);letter-spacing:.12em;margin-top:4px}
+h2{font-size:12px;color:var(--gd);letter-spacing:.08em;margin:0 0 8px}h3{font:400 18px "Dela Gothic One";margin:0 0 8px;color:var(--gd)}
+.c{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.hd{display:flex;gap:10px;align-items:center;background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:8px 12px;margin-bottom:10px}.hd small{display:block;font-size:11px;color:var(--mu)}
+input,select{width:100%;box-sizing:border-box;padding:9px;font:inherit;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}input[type=color]{height:38px;padding:2px}input[type=range]{padding:0;accent-color:var(--gd)}
+label{display:block;font-size:12px;color:var(--mu);margin:6px 0}
+button{display:block;width:100%;margin:8px 0 0;padding:13px;font:400 15px "Dela Gothic One",sans-serif;border:0;border-radius:12px;color:#fff;background:linear-gradient(180deg,#ff5b6b,#d9202f);box-shadow:0 4px 0 #8f1420;transition:transform .25s cubic-bezier(.34,1.8,.64,1),box-shadow .25s cubic-bezier(.34,1.8,.64,1);touch-action:manipulation}
+button:active{transform:translateY(4px) scale(.97);box-shadow:0 0 0 #8f1420;transition-duration:.06s}
+button.main{padding:16px;font-size:17px;background:linear-gradient(180deg,#ffdc5e,#f2a900);color:#2a1d00;box-shadow:0 5px 0 #a06c00}button.main:active{box-shadow:0 0 0 #a06c00}
+button small{display:block;font:700 10px "Zen Kaku Gothic New";opacity:.7;margin-top:2px}
+button.s{background:#1d2a49;box-shadow:0 4px 0 #0c1426;border:1px solid var(--bd)}button.sm{display:inline-block;width:auto;padding:6px 9px;font-size:11px;margin:0 0 0 4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.two button{margin-top:8px}
+.tb{display:flex;gap:6px;flex-wrap:wrap}.tg{width:auto!important;flex:1;padding:9px 6px!important;font-size:12px!important;background:#1d2a49!important;box-shadow:none!important;border:1px solid var(--bd)!important;margin:0!important}.tg.on{background:var(--gd)!important;color:#2a1d00!important}
+.pr{display:flex;align-items:center;gap:6px;padding:7px 2px;border-bottom:1px solid var(--bd);font-size:13px}.pn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pn em{font-style:normal;font-size:9px;color:var(--mu);margin-left:5px;border:1px solid var(--bd);border-radius:4px;padding:0 3px}
+.ag{color:var(--mu);font-size:11px;min-width:26px;text-align:right}.ov{font-size:15px;min-width:26px;text-align:right;color:var(--gd)}
+.pb{font-size:10px;min-width:30px;text-align:center;border-radius:5px;padding:2px 0;color:#0b1020}.GK{background:#f4c20d}.CB,.SB{background:#4aa3ff}.DM,.CM,.AM{background:#3ecf8e}.WG,.ST{background:#ff6b7a}
+.cb{display:inline-block;width:34px;height:6px;background:#1d2a49;border-radius:3px;overflow:hidden}.cb i{display:block;height:100%}.ij{font-size:11px;color:var(--rd)}
+.cr{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--bd)}.cr div{flex:1}.cr small{display:block;font-size:11px;color:var(--mu)}.rt{font:400 18px "Dela Gothic One";color:var(--gd)}
+.sc{display:flex;align-items:center;justify-content:space-around;text-align:center;font-size:12px}.sc b{font:400 30px "Dela Gothic One"}
+.ev{font-size:12px;padding:4px 2px;border-bottom:1px dashed var(--bd)}.ev.r{text-align:right}.st{font-size:12px;color:var(--mu);margin:6px 0}.msg{font:400 18px "Dela Gothic One";color:var(--gd);margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}th,td{padding:5px 3px;text-align:right;border-bottom:1px solid var(--bd)}th{color:var(--mu);font-weight:600}td.tl{text-align:left;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}tr.me td{background:#2a2a10;color:var(--gd)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#0d1426ee;backdrop-filter:blur(8px);border-top:1px solid var(--bd);padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px));z-index:3}nav button{flex:1;margin:0;padding:6px 0;background:none;box-shadow:none;border-radius:8px;font:700 10px "Zen Kaku Gothic New";color:var(--mu)}nav button span{display:block;font-size:19px}nav button.on{color:var(--gd);background:#1d2a49}
+#md{position:fixed;inset:0;background:rgba(5,8,16,.8);display:none;align-items:flex-end;justify-content:center;z-index:9;backdrop-filter:blur(3px)}.mb{background:var(--sf);border:1px solid var(--bd);border-radius:18px 18px 0 0;padding:16px 14px calc(16px + env(safe-area-inset-bottom,0px));width:100%;max-width:560px;max-height:82vh;overflow:auto;animation:up .3s cubic-bezier(.34,1.3,.64,1)}
+@keyframes up{from{transform:translateY(40px);opacity:0}}.ics{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:8px}.ic{padding:6px!important;font-size:18px!important;background:#1d2a49!important;box-shadow:none!important;margin:0!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body><div id="app"></div><div id="md"></div><script>
+const CLUBS=`J1|鹿島アンドラーズ|KSM|74;J1|ヴィッゼル神戸|KOB|74;J1|サンフレッセ広島|HIR|73;J1|FC町田ゼルピア|MCD|72;J1|浦和レッツ|URW|72;J1|川崎フロンテーレ|KAW|72;J1|横浜F・マリナス|YFM|71;J1|柏レイゾル|KSW|71;J1|名古屋グランパズ|NGO|70;J1|ガンパ大阪|GAM|70;J1|セッレソ大阪|CER|69;J1|京都サンカF.C.|KYO|69;J1|SC東京|FCT|69;J1|清水エスパルズ|SPS|67;J1|アビスバ福岡|FUK|67;J1|東京ヴェルティ|TKV|66;J1|ファシアーノ岡山|OKA|65;J1|アルビレクス新潟|NII|65;J1|湘南ペルマーレ|SHO|64;J1|横浜SC|YFC|63;J2|北海道コンサトーレ札幌|SAP|62;J2|ジュビロ盤田|IWA|62;J2|サカン鳥栖|TOS|62;J2|V・ファーレン長埼|NAG|63;J2|ベガルダ仙台|SEN|61;J2|大分トリニーダ|OIT|60;J2|ジェフユナイテット千葉|CHB|61;J2|大宮アルディーシャ|OMI|60;J2|徳島ヴォルティズ|TKS|58;J2|バンフォーレ甲府|KOF|58;J2|モンテティオ山形|YAM|58;J2|水戸ホーリーポック|MTO|58;J2|ロアッソ熊木|KUM|57;J2|藤枝MYSC|FUJ|56;J2|レノヴァ山口|YMG|56;J2|ブラウプリッツ秋田|AKT|55;J2|いわきSC|IWK|56;J2|栃木FC|TCG|54;J2|愛媛SC|EHM|53;J2|SC今治|IMB|54;J3|ザズパ群馬|GUN|52;J3|松本山雅SC|MAT|53;J3|カターレ冨山|TOY|52;J3|ツエーケン金沢|KNZ|52;J3|SC岐阜|GIF|50;J3|FC相模原|SAG|50;J3|AS長野パルセイロ|NAN|50;J3|福島ユナイテッドSC|FKS|48;J3|カイナーレ鳥取|TOT|48;J3|カマダマーレ讃岐|SAN|49;J3|SC琉球|RYU|49;J3|テゲバシャーロ宮崎|MIY|48;J3|奈良クラフ|NAR|48;J3|SC大阪|FCO|47;J3|アスルクララ沼津|NUM|50;J3|高知ユナイテッドFC|KOC|47;J3|鹿児島ユナイテッドSC|KAG|49;J3|バンラーレ八戸|HAC|47;J3|岩手クルージャ盛岡|IWT|46;J3|ギラバンツ北九州|KIT|52`;
+const PLAYERS=`ヴィッゼル神戸@大迫勇哉,ST,36,73,73;武藤嘉記,ST,34,72,72;酒井高得,SB,35,70,70;山口螢,DM,36,68,68;前川黛哉,GK,31,70,70;扇原貴弘,CM,35,68,68;宮代大星,ST,28,70,71;広瀬陸人,SB,30,68,68
+鹿島アンドラーズ@鈴木優麿,ST,30,74,74;植田直道,CB,32,72,72;早川友樹,GK,27,73,74;柴崎嶽,CM,34,72,72;知念敬,ST,27,68,69;師岡柊士,WG,26,70,71;濃野公仁,SB,25,70,72
+サンフレッセ広島@川辺俊,CM,31,70,70;大迫啓介,GK,27,72,73;荒木準人,CB,30,70,70;満田成,AM,27,69,71;加藤陸次木,ST,27,68,69;塩谷史,CB,37,66,66
+FC町田ゼルピア@藤尾翔大,ST,26,70,71;昌子元,CB,34,70,70;谷光生,GK,27,71,72;ナ・サンボ,WG,30,71,71;オ・セブン,ST,27,70,70
+浦和レッツ@西川周策,GK,40,66,66;伊藤敦木,CM,28,71,72;渡辺凌麿,WG,28,70,70;安居海度,CM,26,70,72;石原弘教,SB,28,69,69;関根貴太,WG,31,68,68;ホイブラーデン,CB,31,70,70;松尾祐介,WG,28,70,70
+川崎フロンテーレ@山田親,ST,26,70,71;脇坂泰人,CM,31,71,71;家長昭弘,WG,40,66,66;山本悠喜,CM,29,68,68;佐々木朝,CB,26,68,70
+横浜F・マリナス@アンデルソン・ロベス,ST,33,72,72;天野淳,CM,35,68,68;渡部皓太,CM,28,69,69;喜田拓哉,DM,32,68,68
+柏レイゾル@細谷真太,ST,25,72,74;小屋松知也,WG,30,70,70;古賀大陽,CB,27,70,71
+ガンパ大阪@宇佐見貴史,AM,34,71,71;食野亮大郎,WG,28,69,69;一森淳,GK,35,68,68
+SC東京@長友祐都,SB,40,66,66
+京都サンカF.C.@川崎颯大,CM,25,70,72
+清水エスパルズ@乾貴志,WG,38,68,68;北川航哉,ST,30,68,68
+名古屋グランパズ@永井謙祐,ST,37,68,68;稲垣翔,CM,35,70,70
+マンチェスダー・シティ@ハーラント,ST,26,91,92;ロトリ,DM,30,89,89;フォーデソ,AM,26,86,87;クヴァルディオル,CB,24,85,88;ルベン・ディアズ,CB,29,85,85;トンナルンマ,GK,27,87,88;ベルナルト・シウバ,CM,32,84,84;ジェルキ,AM,23,81,85;レイスンデルズ,CM,28,83,83;トク,WG,23,82,86
+アーセナレ@サガ,WG,25,88,90;ウーデコール,AM,28,87,87;ライズ,DM,27,87,88;サリパ,CB,25,88,90;カブリエウ,CB,29,86,86;ナヤ,GK,31,85,85;ショケレス,ST,28,86,86;ムルティネッリ,WG,25,83,84;スピメンディ,DM,27,83,84;エゼー,AM,28,83,83;ティンパー,SB,25,82,84
+リバブール@ザラー,WG,34,88,88;ファン・タイク,CB,35,87,87;アリソソ,GK,34,87,87;ヴィレツ,AM,23,86,91;イザク,ST,27,87,87;ソボズライ,CM,26,85,86;マック・アリスダー,CM,28,85,85;フラーフェンペルフ,CM,24,85,88;コナテー,CB,27,84,84;フリンポソ,SB,26,82,83;エキティゲ,ST,24,83,87;遠藤杭,DM,33,80,80
+チェルジー@パームー,AM,24,87,89;エンソ・フェルナンデズ,CM,25,85,87;カイセト,DM,25,85,86;ククレシャ,SB,28,82,82;ペトロ・ネト,WG,26,82,82;ジョアン・ペトロ,ST,25,83,85;エズテヴァン,WG,19,80,92;カルナチョ,WG,22,80,86;コルウィレ,CB,24,82,86;ロベルド・サンチェス,GK,29,80,80
+マンチェスター・ユナイテット@プルーノ・フェルナンデス,AM,32,86,86;ムペウモ,WG,27,83,83;グーニャ,AM,27,83,83;シェジュコ,ST,23,82,86;ムイヌー,CM,21,80,89;オナナー,GK,30,80,80;デ・リフド,CB,27,82,83;マスラウィ,SB,29,80,80;レニー・ヨロー,CB,21,79,89
+ドッテナム@ロメロー,CB,28,86,86;ファン・デ・フェソ,CB,25,84,86;クトゥス,WG,26,82,83;マディソソ,AM,30,82,82;ジモンズ,AM,23,83,87;ヴィガーリオ,GK,30,82,82;パリーニャー,DM,31,82,82;ソランゲ,ST,29,81,81
+ニューガッスル@プルーノ・ギマランイス,CM,29,86,86;ゴートン,WG,25,83,85;ポーブ,GK,34,84,84;ヴォルテムーデ,ST,24,83,86;ドナーリ,CM,26,84,85;ドリッピアー,SB,36,80,80;パーンズ,WG,27,81,81
+アスドン・ビラ@エミ・マルティネズ,GK,34,86,86;ワドキンス,ST,31,82,82;ロシャース,AM,24,83,87;マッギソ,CM,32,80,80;コンザ,CB,29,82,82;ティーレマンズ,CM,29,82,82
+ブライドン@三苫薫,WG,29,81,81
+クリスダル・パレス@鎌田太地,CM,29,80,80
+レアル・マドリート@エムパペ,ST,28,91,91;ヴィニジウス,WG,26,90,90;ベリンカム,CM,23,90,93;クルドワ,GK,34,88,88;パルベルデ,CM,28,88,88;リュディカー,CB,33,85,85;アレクサンダー=アーノルト,SB,28,86,86;チュアメニー,DM,26,85,86;カマヴィンカ,CM,24,84,87;ミリドン,CB,28,85,85;ギュレレ,AM,21,83,92;ハウセソ,CB,21,82,90;マスタンドゥオーノ,WG,19,78,92;ガレーラス,SB,23,80,84
+パルセロナ@ヤムル,WG,19,89,97;ペトリ,CM,24,88,91;ナフィーニャ,WG,30,88,88;レヴァントフスキ,ST,38,85,85;デ・ヨソグ,CM,29,86,86;アナウホ,CB,27,85,86;クソデ,SB,28,86,86;クパルシ,CB,19,84,94;ジョアン・カルシア,GK,25,83,87;タニ・オルモ,AM,28,84,84;ラッシュフォート,WG,29,82,82;カビ,CM,22,82,90;フェルミン・ロペズ,AM,23,82,85
+アトレティコ・マドリート@グリースマン,AM,35,85,85;フリアン・アルパレス,ST,26,87,88;オプラク,GK,33,87,87;コゲ,CM,34,82,82;ヒメネズ,CB,31,84,84;ル・ノルマソ,CB,30,83,83;デ・パウレ,CM,32,82,82;パエナ,AM,25,82,84;ショレンテ,WG,31,83,83;セルロード,ST,31,80,80
+アスレティック・ビルパオ@ニコ・ウィリアムズ,WG,24,85,88;イニャキ・ウィリアムズ,ST,32,81,81;サンセド,AM,26,83,84;ウナイ・ジモン,GK,29,82,82;ナポルテ,CB,32,82,82
+レアル・ソシエタ@オヤルサパル,ST,29,85,85;久保健英,WG,25,82,86;レミロー,GK,31,81,81;パレネチェア,WG,25,80,82;ズベルディア,CB,33,80,80
+イソテル@ラウダロ・マルティネス,ST,29,88,88;パレッラ,CM,29,87,87;チャルハノーレ,DM,32,86,86;バスドーニ,CB,27,87,88;ディムルコ,SB,29,85,85;マルクズ・テュラム,ST,29,84,84;ゾムー,GK,38,83,83;トゥンフリース,SB,30,83,83;アチェルピ,CB,38,80,80;ムヒダリアン,CM,37,80,80;パヴァーレ,CB,30,82,82;ピオ・エスポジド,ST,21,76,87
+ナポリー@デ・プライネ,AM,35,86,86;マクドミネイ,CM,30,84,84;ルガク,ST,33,82,82;アングィザ,CM,30,82,82;ディ・ロレソツォ,SB,33,82,82;プオンジョルノ,CB,27,83,84;メレド,GK,29,82,82;ホイルント,ST,23,79,85;ネレズ,WG,29,81,81;ロボドカ,DM,32,82,82
+ミラソ@レオソ,WG,27,86,86;ブリシッチ,WG,28,84,84;メニャソ,GK,31,88,88;モトリッチ,CM,41,82,82;ラピオ,CM,31,84,84;サンティアコ・ヒメネス,ST,25,80,84;ドモリ,CB,29,83,83;テオ・エルナンデズ,SB,29,86,86;ヌソク,AM,29,82,82
+ユベンドス@ユルディス,AM,21,84,92;ヴナホヴィッチ,ST,26,81,82;プレーメル,CB,29,85,85;ロガテッリ,DM,28,81,81;コーブマイネルス,CM,28,82,82;ジョナサン・デイヴィット,ST,26,83,84;ディ・グレコリオ,GK,29,81,81;コンセイソソ,WG,24,81,84;ガンビアーゾ,SB,26,82,83
+アタランダ@ルックマソ,WG,29,83,83;レテギー,ST,27,82,82;デ・ローソ,DM,35,80,80;ガルネセッキ,GK,26,82,83;スガルヴィーニ,CB,23,83,87
+ローム@ディパラ,AM,33,83,83;ズヴィラル,GK,27,84,84;コネー,CM,25,81,83;ンディガ,CB,27,82,82;ズレ,AM,23,81,85;ペレクリーニ,CM,30,80,80;フェルグソソ,ST,22,78,84
+パルム@鈴木彩艷,GK,23,78,86
+パイエルン@ゲイン,ST,33,91,91;ムジアラ,AM,23,88,92;オリーセー,WG,25,87,89;キミッヒー,CM,31,87,87;アルフォンソ・デイヴィズ,SB,26,84,85;ウパメガノ,CB,28,85,85;キム・ミンシェ,CB,30,84,84;ノイアーー,GK,40,84,84;ルイス・ディアズ,WG,29,86,86;ゴレツガ,CM,31,82,82;パヴロヴィッチー,DM,22,82,86;ライムー,SB,29,82,82;ダー,CB,30,85,85
+レパークーゼン@グリマルト,SB,31,85,85;ジック,ST,30,84,84;パラジオス,CM,26,82,83;テナ,WG,27,80,80;ホフマソ,AM,28,81,81;フナデツキー,GK,37,80,80;ダプソバ,CB,27,82,83
+トルトムント@ギラジー,ST,30,84,84;ブランド,AM,30,82,82;コーペル,GK,29,86,86;シュロッダーベック,CB,27,84,85;ギッテンズ,WG,22,82,87;パイアー,ST,24,80,83;ザピッツァー,CM,32,80,80;アンドン,CB,30,81,81
+ライブツィヒ@バウムガルドナー,AM,27,82,83;ディオマソデ,WG,20,82,92;クラーチ,GK,36,80,80;オルパン,CB,34,82,82;ナウム,SB,28,80,80;ヘンリクズ,SB,29,80,80
+フランクフルド@堂安津,WG,28,80,80
+ボルジアMG@板倉晃,CB,29,80,80
+パリ・サンシェルマン@デンペレ,WG,29,90,90;ヴィティーニャー,CM,26,88,89;ハキミー,SB,28,87,87;マルキーニョズ,CB,32,86,86;グヴァラツヘリア,WG,25,87,88;トゥエ,AM,21,85,93;ヌーノ・メンデズ,SB,24,87,89;ショアン・ネヴェス,CM,22,86,92;ファピアン・ルイス,CM,30,84,84;パルコラ,WG,24,83,86;サイール=エメリー,CM,20,81,91;パチョー,CB,25,84,85;ザフォノフ,GK,27,82,82;コンサロ・ラモス,ST,25,80,83;イ・カンイン,AM,25,80,82
+ムルセイユ@グリーンウット,WG,25,83,84;レッリ,GK,34,80,80;パレルディ,CB,27,80,80;ホイピュルク,DM,31,80,80;オーパメヤン,ST,37,78,78
+モナコー@アクリウジュ,WG,24,80,83;エンポロ,ST,29,80,80;南野拓美,AM,31,80,80;ザガリア,DM,30,80,80;コーソ,GK,28,78,78;パログン,ST,25,79,82;ペン・セギール,AM,21,79,88
+リヨソ@ラカゼッド,ST,35,80,80
+レソヌ@古橋享梧,ST,31,79,79`;
+const $=s=>document.querySelector(s),R=(a,b)=>a+Math.random()*(b-a),RI=(a,b)=>Math.floor(R(a,b+1)),C=(x,a,b)=>Math.max(a,Math.min(b,x)),ch=q=>Math.random()<q,pk=a=>a[RI(0,a.length-1)],gs=()=>(Math.random()+Math.random()+Math.random()-1.5)*1.6;
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const LG={J1:{n:'J1リーグ',fl:'🇯🇵',g:'jp'},J2:{n:'J2リーグ',fl:'🇯🇵',g:'jp'},J3:{n:'J3リーグ',fl:'🇯🇵',g:'jp'}},EUROS=['アヤックズ','ベンフィガ','セルティッグ','ブライドン','スドラスブール','シュトゥットガルド','ヘソク','ズポルティング','PSW','ウェスドハム','フランクフルド','ボルジアMG','ナポリー','ビシャレアル','リヨソ','ライブツィヒ'],JPN=['三苫薫','鎌田太地','遠藤杭','久保健英','鈴木彩艷','堂安津','南野拓美','板倉晃','古橋享梧'];
+const KC={'アーセナル':'d7141a,ffffff','マンチェスター・シティ':'6cabdd,1c2c5b','リバプール':'c8102e,f6eb61','チェルシー':'034694,ffffff','マンチェスター・ユナイテッド':'da291c,fbe122','トッテナム':'132257,ffffff','ニューカッスル':'241f20,ffffff','アストン・ビラ':'670e36,95bfe5','レアル・マドリード':'f5f5f5,febe10','バルセロナ':'a50044,004d98','アトレティコ・マドリード':'cb3524,1f3b82','インテル':'0068a8,000000','ナポリ':'12a0d7,ffffff','ミラン':'fb090b,000000','ユベントス':'000000,ffffff','アタランタ':'1e71b8,000000','ローマ':'8e1f2f,f0bc42','バイエルン':'dc052d,0066b2','レバークーゼン':'e32221,000000','ドルトムント':'fde100,000000','ライプツィヒ':'dd0741,ffffff','パリ・サンジェルマン':'004170,da291c','マルセイユ':'2faee0,ffffff','モナコ':'e51b22,ffffff','リヨン':'ffffff,0a3b8c'};
+const NMP={en:['Smith,Jones,Taylor,Brown,Wilson,Evans,Walker,Wright,Green,Hall','Jack,Harry,Charlie,Oliver,George,Jamie,Tom,Ben,Callum,Ryan'],es:['García,López,Martínez,Sánchez,Pérez,Gómez,Ruiz,Díaz,Torres,Navarro','Álvaro,Pablo,Diego,Sergio,Marcos,Iker,Adrián,Hugo,Mario,Dani'],it:['Rossi,Ferrari,Esposito,Bianchi,Romano,Conti,Greco,Marino,Gallo,Costa','Marco,Luca,Matteo,Andrea,Lorenzo,Davide,Simone,Nicolò,Federico,Riccardo'],de:['Müller,Schmidt,Schneider,Fischer,Weber,Becker,Wagner,Hoffmann,Koch,Richter','Lukas,Jonas,Felix,Leon,Niklas,Moritz,Julian,Tim,Paul,Maxi'],fr:['Martin,Bernard,Dubois,Moreau,Laurent,Simon,Lefèvre,Mercier,Fontaine,Roux','Hugo,Lucas,Théo,Antoine,Nicolas,Rayan,Adrien,Mathis,Enzo,Yanis'],pt:['Silva,Santos,Oliveira,Souza,Pereira,Costa,Ferreira,Rocha,Lima,Alves','João,Lucas,Gabriel,Pedro,Rafael,Thiago,Bruno,Vinícius,Matheus,Caio'],af:['Okafor,Mensah,Diallo,Traoré,Ndiaye,Keita,Coulibaly,Sow,Camara,Touré','Chinedu,Kwame,Moussa,Ibrahim,Sadio,Cheick,Mamadou,Seydou,Abdou,Emeka'],kr:['キム,イ,パク,チェ,チョン,カン,チョ,ユン','ミンジュン,ジフン,ヒョンウ,ソンミン,ドヒョン,ジュウォン,テヒョン,スンホ'],jp:['田中,佐藤,鈴木,高橋,伊藤,渡辺,山本,小林,加藤,吉田','翔,大地,蓮,陸,拓海,悠斗,健太,隼人,大輝,颯太']};
+const REG={'国内ユース':1,'ブラジル':1,'欧州':1,'韓国・アジア':1,'アフリカ':1};
+const FM={'4-3-3':['GK','CB','CB','SB','SB','DM','CM','CM','WG','WG','ST'],'4-4-2':['GK','CB','CB','SB','SB','CM','CM','WG','WG','ST','ST'],'4-2-3-1':['GK','CB','CB','SB','SB','DM','DM','AM','WG','WG','ST'],'3-5-2':['GK','CB','CB','CB','SB','SB','DM','CM','CM','ST','ST']};
+const PRI={GK:0,CB:1,SB:2,DM:3,CM:4,AM:5,WG:6,ST:7},NEED={GK:3,CB:4,SB:4,DM:2,CM:3,AM:2,WG:3,ST:3},PN={GK:'GK',CB:'CB',SB:'SB',DM:'DM',CM:'CM',AM:'AM',WG:'WG',ST:'ST'};
+const PEN={};[['CB','SB',5],['DM','CM',3],['CM','AM',3],['AM','WG',4],['WG','ST',5],['AM','ST',5],['DM','CB',6],['CM','WG',6],['SB','WG',6],['SB','DM',6],['SB','CM',7],['CM','ST',8]].forEach(([a,b,v])=>{PEN[a+b]=v;PEN[b+a]=v});
+const pen=(a,b)=>a==b?0:(a=='GK'||b=='GK')?35:(PEN[a+b]||14);
+const WA={ST:1.2,WG:1,AM:1.1,CM:.6,SB:.25,DM:.15,CB:0,GK:0},WD={GK:1.3,CB:1.2,SB:.7,DM:.9,CM:.4,AM:0,WG:0,ST:0};
+const SH={shield:'M12 6H88V52Q88 82 50 96Q12 82 12 52Z',round:'M50 4A46 46 0 1 1 49.99 4Z',sq:'M14 8H86Q92 8 92 14V80Q92 92 80 92H20Q8 92 8 80V14Q8 8 14 8Z',hex:'M50 4L90 27V73L50 96L10 73V27Z'},ICS=['⭐','👑','⚡','⚽','🦁','🦅','🐺','🐉','🔥','🌙','☀️','⚓','🌹','🛡️','🐻','🦈'];
+let W=null,UI={tab:'home',sub:'buy',lg:'J1',f:{pos:'',lg:'',age:40,ov:62},sel:null,sc:[],slot:null};
+const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+const h2x=(h,s,l)=>{s/=100;l/=100;const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12,c=l-a*Math.max(-1,Math.min(k-3,9-k,1));return Math.round(255*c).toString(16).padStart(2,'0')};return f(0)+f(8)+f(4)};
+function emb(e,sz){const id='c'+Math.random().toString(36).slice(2,7),d=SH[e.sh]||SH.shield;let pat='';
+ if(e.pt=='v')pat=`<rect width="50" height="100" fill="#${e.c2}"/>`;else if(e.pt=='s')pat=[0,1,2,3,4].map(i=>`<rect x="${10+i*20}" width="10" height="100" fill="#${e.c2}"/>`).join('');else if(e.pt=='h')pat=`<rect y="50" width="100" height="50" fill="#${e.c2}"/>`;else if(e.pt=='d')pat=`<polygon points="0,100 100,0 100,100" fill="#${e.c2}"/>`;else if(e.pt=='b')pat=`<rect y="36" width="100" height="26" fill="#${e.c2}"/>`;
+ return `<svg viewBox="0 0 100 100" width="${sz}" height="${sz}"><defs><clipPath id="${id}"><path d="${d}"/></clipPath></defs><path d="${d}" fill="#${e.c1}"/><g clip-path="url(#${id})">${pat}</g><path d="${d}" fill="none" stroke="#fff" stroke-width="3"/><text x="50" y="54" font-size="30" text-anchor="middle">${e.ic}</text><text x="50" y="82" font-size="16" text-anchor="middle" font-weight="900" fill="#fff" stroke="#000" stroke-width=".9" paint-order="stroke" font-family="sans-serif">${esc(e.tx)}</text></svg>`}
+function defEmb(n,cd){const k=KC[n],h=hash(n),[c1,c2]=k?k.split(','):[h2x(h%360,60,38),h2x((h+150)%360,25,92)];return{sh:['shield','round','sq','hex'][h%4],pt:['p','v','s','h','d','b'][(h>>3)%6],c1,c2,ic:ICS[(h>>5)%ICS.length],tx:cd.slice(0,3)}}
+function gname(g){const[a,b]=NMP[g],x=pk(a.split(',')),y=pk(b.split(','));return g=='jp'?x+y:g=='kr'?x+'・'+y:y[0]+'.'+x}
+function val(p){let v=Math.max(.05,1.5*Math.pow(1.13,p.ov-55)),a=p.ag;if(a<=23)v*=1+(p.pt-p.ov)*.07+.15;else if(a>=30)v*=Math.max(.12,1-(a-29)*.13);return Math.round(v*10)/10||.1}
+const wage=p=>Math.max(.1,Math.round((val(p)*.18+.15)*10)/10),fm=x=>{const y=x*.17;return y>=1?(Math.round(y*10)/10)+'億円':Math.round(y*10000)+'万円'};
+function gp(po,ag,ov,pt,c,n,rl){return{id:W.uid++,n:n||'',po,ag,ov,pt,c,w:0,yr:RI(1,4),ij:0,cd:100,g:0,a:0,ap:0,rs:0,rl:rl?1:0}}
+function randPos(){return pk(['GK','CB','CB','SB','SB','DM','CM','CM','AM','WG','WG','ST','ST'])}
+function sq(ci){if(!W._m){W._m={};for(const p of W.pl)(W._m[p.c]=W._m[p.c]||[]).push(p)}return W._m[ci]||[]}
+function init(){
+ W={y:2026,md:0,me:-1,cl:[],pl:[],log:[],sched:{},lgc:{},uid:1,conf:60,hist:[],tro:[],xo:{},sk:1,sc:[],last:null,exp:[],eu:false,cash:0,mn:'監督',pool:[],obj:0,_m:null};
+ const RP={};(PLAYERS).split('\n').forEach(l=>{const[c,r]=l.split('@');RP[c]=r.split(';')});
+ CLUBS.split(';').forEach(l=>{const[lg,n,cd,r]=l.trim().split('|'),i=W.cl.length,c={id:i,lg,n,cd,r:+r,rev:Math.max(3,Math.round(4*Math.pow(1.12,+r-50))),e:defEmb(n,cd),f:'4-3-3',st:1,pr:1,t:{p:0,w:0,d:0,l:0,gf:0,ga:0}};W.cl.push(c);(W.lgc[lg]=W.lgc[lg]||[]).push(i);
+  const cnt={};for(const s of RP[n]||[]){const[nm,po,ag,ov,pt]=s.split(',');W.pl.push(gp(po,+ag,+ov,+pt,i,nm,1));cnt[po]=(cnt[po]||0)+1}
+  for(const po in NEED)for(let k=(cnt[po]||0);k<NEED[po];k++){const ag=RI(19,34),ov=C(Math.round(c.r-13+R(-5,5)-(k>0?3:0)),42,82);W.pl.push(gp(po,ag,ov,ag<24?ov+RI(2,10):ov,i,gname(LG[lg].g)))}});
+ for(const k in RP)if(!W.cl.some(c=>c.n==k))for(const s of RP[k]){const[nm,po,ag,ov,pt]=s.split(',');const p=gp(po,+ag,+ov,+pt,-4,nm,1);p.oc=k;p.jp=JPN.includes(nm)?1:0;W.pl.push(p)}
+ for(const c of W.cl){const s=W.pl.filter(p=>p.c==c.id),tot=s.reduce((a,p)=>a+Math.pow(val(p),.85),0),wb=c.rev*.55;for(const p of s)p.w=Math.max(.1,Math.round(wb*Math.pow(val(p),.85)/tot*10)/10)}
+ for(const p of W.pl)if(p.c==-4)p.w=wage(p)
+ for(const lg in W.lgc)mkSched(lg);genPool();W._m=null}
+function mkSched(lg){const t=W.lgc[lg].slice(),n=t.length,rs=[];if(n%2)t.push(-1);const m=t.length;for(let r=0;r<m-1;r++){const x=[];for(let i=0;i<m/2;i++){const a=t[i],b=t[m-1-i];if(a>=0&&b>=0)x.push(r%2?[b,a]:[a,b])}rs.push(x);t.splice(1,0,t.pop())}W.sched[lg]=[...rs,...rs.map(r=>r.map(([a,b])=>[b,a]))];for(const i of W.lgc[lg])W.cl[i].t={p:0,w:0,d:0,l:0,gf:0,ga:0}}
+function genPool(){W.pool=[];const mk=(rg,n,fn)=>{for(let i=0;i<n;i++){const p=fn();p.rg=rg;p.yr=4;W.pool.push(p)}};
+ mk('国内ユース',14,()=>{const ag=RI(16,21),pt=C(Math.round(62+R(0,16)+Math.pow(Math.random(),3)*22),60,95),ov=C(Math.round(pt-R(20,34)+(ag-16)*3),36,64);return gp(randPos(),ag,ov,pt,-3,gname('jp'))});
+ for(const[rg,g_,n]of[['ブラジル','pt',8],['欧州','en',5],['韓国・アジア','kr',6],['アフリカ','af',5]])mk(rg,n,()=>{const ag=RI(21,31),ov=C(Math.round(58+Math.pow(Math.random(),1.6)*22),58,80);return gp(randPos(),ag,ov,ov,-3,gname(g_))})}
+const eff=(p,s)=>(p.ov-pen(p.po,s))*(.88+.12*p.cd/100);
+function xi(ci){const c=W.cl[ci],s=sq(ci).filter(p=>!p.ij),F=FM[c.f],used=new Set(),r=[];for(const k of [...F.keys()].sort((a,b)=>PRI[F[a]]-PRI[F[b]])){const sl=F[k];let o=ci==W.me&&W.xo[k]!=null?s.find(p=>p.id==W.xo[k]&&!used.has(p.id)):null;if(!o){let b=-1e9;for(const p of s){if(used.has(p.id))continue;const e=eff(p,sl);if(e>b){b=e;o=p}}}if(o){used.add(o.id);r[k]={s:sl,p:o}}}return r.filter(Boolean)}
+function str(x,c){let a=0,aw=0,d=0,dw=0;for(const{s,p}of x){const e=eff(p,s);a+=e*WA[s];aw+=WA[s];d+=e*WD[s];dw+=WD[s]}return[a/aw+(c.st-1)*2.5+(c.pr-1),d/dw+(1-c.st)*2.5+(c.pr-1)]}
+const pois=l=>{const L=Math.exp(-l);let k=0,p=1;do{k++;p*=Math.random()}while(p>L);return k-1};
+const SW={ST:5,WG:3.5,AM:3.5,CM:1.5,DM:.6,SB:.8,CB:.8,GK:0},AW={ST:2,WG:3.5,AM:3.5,CM:2.5,DM:1,SB:2.5,CB:.5,GK:0};
+function wpick(x,W_,ex){let t=0;const w=x.map(({s,p})=>{const v=p==ex?0:W_[s]*Math.pow(1.04,p.ov-70);t+=v;return v});let r=Math.random()*t;for(let i=0;i<x.length;i++){r-=w[i];if(r<=0)return x[i].p}return x[x.length-1].p}
+function sim(h,a,det){const H=W.cl[h],A=W.cl[a],xh=xi(h),xa=xi(a),[ah,dh]=str(xh,H),[aa,da]=str(xa,A),lh=1.3*Math.exp((ah-da)/20)*1.1,la=1.3*Math.exp((aa-dh)/20)*.92,gh=Math.min(pois(lh),8),ga=Math.min(pois(la),8),ev=[];
+ const goal=(x,n,side)=>{for(let i=0;i<n;i++){const s=wpick(x,SW),as=ch(.75)?wpick(x,AW,s):null;s.g++;if(as)as.a++;ev.push({m:RI(1,90),side,s:s.n,a:as&&as.n})}};
+ goal(xh,gh,0);goal(xa,ga,1);ev.sort((a,b)=>a.m-b.m);
+ for(const[x,cc]of[[xh,H],[xa,A]]){for(const{p}of x){p.ap++;p.cd=C(p.cd-RI(6,12)-cc.pr*2,35,100);if(ch(.005*(1+cc.pr*.4))){p.ij=ch(.7)?RI(1,3):ch(.8)?RI(4,10):RI(12,30)}}}
+ for(const c of[H,A]){}
+ const upd=(c,f,a_)=>{const t=c.t;t.gf+=f;t.ga+=a_;f>a_?t.w++:f<a_?t.l++:t.d++;t.p=t.w*3+t.d};upd(H,gh,ga);upd(A,ga,gh);
+ let r=null;if(det){const poss=Math.round(C(50+(ah+dh-aa-da)*.7,32,68)),sh=[Math.round(lh*6+R(1,4)),Math.round(la*6+R(1,4))];
+  const rt=(x,gf,gaa)=>x.map(({s,p})=>({n:p.n,s,r:Math.round(C(6.3+(gf>gaa?.5:gf<gaa?-.4:.1)+(ev.filter(e=>e.s==p.n).length*.9)+(ev.filter(e=>e.a==p.n).length*.5)+(gaa==0&&(s=='GK'||s=='CB')?.5:0)+R(-.5,.5),4.5,10)*10)/10}));
+  r={h,a,gh,ga,ev,poss,sh,rh:rt(xh,gh,ga),ra:rt(xa,ga,gh)}}return r}
+function advRound(){
+ const rn=W.md,res=[];for(const lg in W.sched)for(const[h,a]of (W.sched[lg][rn]||[])){const det=h==W.me||a==W.me,r=sim(h,a,det);if(det)W.last={...r,md:rn+1}}
+ const mine=sq(W.me),played=new Set(xi(W.me).map(x=>x.p.id));
+ for(const p of W.pl){if(p.c<0)continue;if(p.ij>0)p.ij--;else p.cd=C(p.cd+(played.has(p.id)||p.c!=W.me?6:14),0,100)}
+ const me=W.cl[W.me],n=W.sched[me.lg].length,wb=mine.reduce((a,p)=>a+p.w,0);W.cash+=me.rev*.62/n-wb/n;
+ W.md++;W._m=null}
+const tbl=lg=>W.lgc[lg].map(i=>W.cl[i]).sort((a,b)=>b.t.p-a.t.p||(b.t.gf-b.t.ga)-(a.t.gf-a.t.ga)||b.t.gf-a.t.gf);
+const ovr=ci=>{const x=xi(ci);return x.length?x.reduce((a,b)=>a+b.p.ov,0)/x.length:50};
+function log(t){W.log.unshift(W.y+'/'+String(W.md).padStart(2,'0')+' '+t);W.log=W.log.slice(0,40)}
+function promo(){for(const[u,l]of[['J1','J2'],['J2','J3']]){const dn=tbl(u).slice(-3),up=tbl(l).slice(0,3);for(const c of dn)c.lg=l;for(const c of up)c.lg=u}W.lgc={};for(const c of W.cl)(W.lgc[c.lg]=W.lgc[c.lg]||[]).push(c.id)}
+function endSeason(){
+ const mx=Math.max(...Object.values(W.sched).map(s=>s.length));for(let r=W.md;r<mx;r++)for(const lg in W.sched)for(const[h,a]of (W.sched[lg][r]||[]))sim(h,a,false);
+ const me=W.cl[W.me],T=tbl(me.lg),rk=T.indexOf(me)+1,N=T.length,exp=Math.max(1,Math.ceil(W.cl.filter(c=>c.lg==me.lg&&c.r>me.r).length*.85+1)),d=exp-rk;
+ let msg=`${W.y}-${String(W.y+1).slice(2)}シーズン：${rk}位（勝点${me.t.p}）／目標${exp}位`;
+ W.conf=C(W.conf+d*3+(rk==1?12:0),0,100);if(rk==1){W.tro.push(W.y+' '+LG[me.lg].n+'優勝');msg+=' 🏆優勝！'}
+ let inc=me.rev*(.05+(N-rk)/N*.1);if(W.eu){const x=Math.random()+(me.r-88)/60,r=x>1.05?'優勝':x>.9?'準優勝':x>.75?'ベスト4':x>.55?'ベスト8':x>.3?'ベスト16':'GS敗退';msg+=`／ACLエリート:${r}`;inc+=me.rev*.08;if(r=='優勝'){W.tro.push(W.y+' ACLエリート優勝');W.conf=C(W.conf+10,0,100)}}
+ W.eu=me.lg=='J1'&&rk<=3;const lg0=me.lg;promo();if(me.lg!=lg0){const up=me.lg<lg0;msg+=up?` ⤴️${me.lg}へ昇格！`:` ⤵️${me.lg}へ降格…`;W.conf=C(W.conf+(up?10:-10),0,100);log(up?'クラブが昇格':'クラブが降格')}
+W.cash+=inc;W.hist.push({y:W.y,rk,p:me.t.p,club:me.n});
+ const sc=W.pl.filter(p=>p.c>=0).sort((a,b)=>b.g-a.g)[0];if(sc)log(`得点王候補：${sc.n} ${sc.g}ゴール`);
+ // aging
+ for(const p of W.pl){p.ag++;let d;if(p.ag<=24)d=(p.pt-p.ov)*R(.2,.4)+R(-1,2);else if(p.ag<=29)d=R(-1.5,1.5);else d=-R(.4,2.4)*(p.ag>=33?1.6:1)*(p.po=='GK'?.6:1);p.ov=Math.round(C(p.ov+d,25,97));if(p.ag>=24)p.pt=p.ov;else p.pt=Math.max(p.pt,p.ov);p.g=p.a=p.ap=0;p.cd=100;p.ij=0;p.yr--}
+ // retire
+ for(const p of W.pl)if((p.c>=0||p.c==-4)&&p.ag>=35&&ch((.2+.15*(p.ag-35))*(p.po=='GK'?.5:1))){if(p.c==W.me||p.ov>=82)log(`${p.n}（${p.ag}歳）が現役引退`);p.c=-2}
+ W.pl=W.pl.filter(p=>p.c!=-2&&p.c!=-3);
+ for(const p of W.pl.filter(p=>p.c>=0&&p.c!=W.me&&p.ag<=27&&p.ov>=70))if(ch(.15)){const from=W.cl[p.c];p.oc=pk(EUROS);log(`海外移籍：${p.n}（${p.po}）${from.n}→${p.oc} ${fm(val(p)*1.2)}`);p.c=-4;p.w=wage(p)}
+ for(let i=0;i<8;i++){const ag=RI(18,21),pt=RI(84,95),ov=C(pt-RI(10,18),66,80),p=gp(randPos(),ag,ov,pt,-4,gname(pk(['en','de','fr','it','es','pt'])));p.oc=pk(EUROS);p.w=wage(p);W.pl.push(p)}
+ for(const p of W.pl)if(p.c==-4&&p.yr<=0)p.yr=RI(2,4);
+ // AI contracts & academy & balance
+ for(const c of W.cl){for(const p of sq(c.id))if(c.id!=W.me&&p.yr<=0)p.yr=RI(2,4);if(c.id==W.me)continue;for(let k=RI(1,2);k>0;k--){const ov=C(Math.round(c.r-30+R(0,10)),32,56);W.pl.push(gp(randPos(),17,ov,ov+RI(8,28),c.id,gname(LG[c.lg].g)))}}
+ W._m=null;for(const c of W.cl){const s=sq(c.id);for(const po in NEED){const n=s.filter(p=>p.po==po).length,mn=Math.max(2,NEED[po]-1);for(let k=n;k<mn;k++){const ag=RI(19,32),ov=C(Math.round(c.r-13+R(-5,4)),42,82);const p=gp(po,ag,ov,ov,c.id,gname(LG[c.lg].g));p.w=wage(p);W.pl.push(p)}}if(c.id!=W.me){const s2=sq(c.id).sort((a,b)=>b.ov-a.ov);for(const p of s2.slice(28))p.c=-1}}
+ W._m=null;
+ // pool signed by AI
+ for(const p of W.pool.sort((a,b)=>b.pt-a.pt).slice(0,10)){const c=pk(W.cl.filter(c=>c.r>=64&&c.lg=='J1'&&c.id!=W.me));if(c&&ch(.7)){p.c=c.id;p.w=wage(p);W.pl.push(p);if(p.pt>=90)log(`神童：${p.n}（${p.ag}歳 潜在${p.pt}）が${c.n}入り`)}}
+ W.pool=[];for(const p of W.pl)if(p.c>=0&&p.c!=W.me)p.w=wage(p);W._m=null;
+ W.y++;W.md=0;W.xo={};W.exp=sq(W.me).filter(p=>p.yr<=0).map(p=>p.id);for(const lg in W.lgc)mkSched(lg);genPool();W.sc=[];
+ W.sum=msg;if(W.conf<15)W.fired=true;return msg}
+function save(){try{localStorage.setItem('fm26',JSON.stringify(W))}catch(e){}}
+function load(){try{const s=localStorage.getItem('fm26');if(s){W=JSON.parse(s);W._m=null;return true}}catch(e){}return false}
+
+const win=()=>{const n=W.sched[W.cl[W.me].lg].length;return W.md==0||(W.md>=Math.floor(n/2)-2&&W.md<=Math.floor(n/2)+1)};
+function modal(h){const m=$('#md');m.innerHTML=h?`<div class="mb">${h}<button class="s" onclick="modal()">閉じる</button></div>`:'';m.style.display=h?'flex':'none'}
+const bar=v=>`<span class="cb"><i style="width:${v}%;background:${v>70?'#3ecf8e':v>45?'#ffcf33':'#ff5a6e'}"></i></span>`;
+const pb=p=>`<b class="pb ${p.po}">${p.po}</b>`;
+function row(p,fn,x){return `<div class="pr" onclick="${fn}">${pb(p)}<span class="pn">${esc(p.n)}${p.rl?'':'<em>架空</em>'}</span><span class="ag">${p.ag}</span><b class="ov">${p.ov}</b>${x||''}</div>`}
+function fix(){const me=W.cl[W.me],r=W.sched[me.lg][W.md];if(!r)return null;const m=r.find(([h,a])=>h==W.me||a==W.me);return m}
+function adv(n){if(W.fired)return;const me=W.cl[W.me];for(const id of W.exp){const p=W.pl.find(x=>x.id==id);if(p&&p.yr<=0){p.c=-1;log(`${p.n}が契約満了で退団`)}}W.exp=[];W._m=null;
+ const tot=W.sched[me.lg].length;for(let i=0;i<n&&W.md<tot;i++)advRound();save();render();if(n==1&&W.last)showMatch()}
+function showMatch(){const m=W.last;if(!m)return;const H=W.cl[m.h],A=W.cl[m.a],evs=m.ev.map(e=>`<div class="ev ${e.side?'r':''}">${e.m}' ⚽ ${esc(e.s)}${e.a?` <small>(${esc(e.a)})</small>`:''}</div>`).join('')||'<div class="ev">ゴールなし</div>';
+ const all=[...m.rh,...m.ra].sort((a,b)=>b.r-a.r)[0],mine=m.h==W.me?m.rh:m.ra;
+ modal(`<h3>第${m.md}節</h3><div class="sc"><div>${emb(H.e,40)}<br>${esc(H.n)}</div><b>${m.gh} - ${m.ga}</b><div>${emb(A.e,40)}<br>${esc(A.n)}</div></div>${evs}<div class="st">ポゼッション ${m.poss}% - ${100-m.poss}%　シュート ${m.sh[0]} - ${m.sh[1]}</div><div class="st">MOM：${esc(all.n)}（${all.r}）</div><div class="st">自チーム採点：${mine.map(x=>esc(x.n)+' '+x.r).join(' ／ ')}</div>`)}
+function setup(){
+ const has=(()=>{try{return !!localStorage.getItem('fm26')}catch(e){return false}})();
+ $('#app').innerHTML=`<h1>ROAD TO GLORY<small>Jリーグ クラブ監督シミュレーター 2026</small></h1>${has?'<div class="c"><button id="ct" class="main">前回の続きから<small>オートセーブを読み込む</small></button></div>':''}<div class="c"><h2>監督名</h2><input id="mn" value="${esc(W&&W.mn||'')}" maxlength="14" placeholder="あなたの名前"></div><div class="c"><h2>就任するクラブを選ぼう</h2><div class="tb">${Object.keys(LG).map(k=>`<button class="tg ${k==UI.lg?'on':''}" onclick="UI.lg='${k}';setup()">${LG[k].fl} ${LG[k].n}</button>`).join('')}</div>${W.cl.filter(c=>c.lg==UI.lg).sort((a,b)=>b.r-a.r).map(c=>{const st=sq(c.id).filter(p=>p.rl).sort((a,b)=>b.ov-a.ov).slice(0,3).map(p=>p.n).join('・');return `<div class="cr" onclick="pick(${c.id})">${emb(c.e,40)}<div><b>${esc(c.n)}</b><small>${st||'若手中心のチーム'}</small></div><span class="rt">${c.r}</span></div>`}).join('')}</div><div class="c" style="font-size:12px;color:var(--mu)">※クラブ名・選手名は権利への配慮から、一目で分かる程度にあえて変更しています。クラブ構成・選手データは2025年までの情報をもとにした概算です。実際の2026年の所属・能力とは異なる場合があります。名前が架空の選手は「架空」と表示されます。J1〜J3は昇降格あり。海外の大物（欧州の実在選手）は「移籍」の獲得リストに「海外クラブ」で出ます。</div>`;
+ const b=$('#ct');if(b)b.onclick=()=>{load();render()}}
+function pick(id){const c=W.cl[id];modal(`<div style="text-align:center">${emb(c.e,90)}<h3>${esc(c.n)}</h3><p>チーム総合 ${c.r}／年間収入 約${fm(c.rev)}</p><p style="font-size:13px;color:var(--mu)">就任後、クラブタブでエンブレムとクラブ名を自由に変更できます。</p><button class="main" onclick="start(${id})">監督に就任する</button></div>`)}
+function start(id){W.mn=($('#mn')&&$('#mn').value.trim())||'監督';W.me=id;const c=W.cl[id];W.cash=c.rev*.35;W.conf=60;W.log=[];log(`${W.mn}監督が${c.n}の指揮官に就任`);modal();save();UI.tab='home';render()}
+const TABS=[['home','🏠','ホーム'],['squad','👥','選手'],['tac','📋','戦術'],['tr','🔁','移籍'],['tbl','📊','順位'],['club','🛡️','クラブ']];
+function render(){
+ if(!W||W.me<0)return setup();const me=W.cl[W.me],T=UI.tab;
+ if(W.fired)return fired();
+ const top=`<div class="hd">${emb(me.e,46)}<div style="flex:1"><b>${esc(me.n)}</b><small>${W.y}-${String(W.y+1).slice(2)}　${W.md==0?'プレシーズン':'第'+W.md+'節終了'}　${win()?'🟢移籍市場オープン':'🔴移籍市場クローズ'}</small></div><div style="text-align:right"><b>${fm(W.cash)}</b><small>信頼度 ${Math.round(W.conf)}</small></div></div>`;
+ $('#app').innerHTML=top+`<div id="pg">${pg(T)}</div><nav>${TABS.map(([k,i,n])=>`<button class="${k==T?'on':''}" onclick="UI.tab='${k}';render()"><span>${i}</span>${n}</button>`).join('')}</nav>`}
+function pg(T){return T=='home'?home():T=='squad'?squadP():T=='tac'?tac():T=='tr'?trP():T=='tbl'?tblP():clubP()}
+function home(){const me=W.cl[W.me],f=fix(),tot=W.sched[me.lg].length,fin=W.md>=tot,T=tbl(me.lg),rk=T.indexOf(me)+1;let h='';
+ if(W.exp.length)h+=`<div class="c"><h2>契約更新（${W.exp.length}人）</h2>${W.exp.map(id=>{const p=W.pl.find(x=>x.id==id);if(!p||p.c!=W.me)return '';const w=Math.round(p.w*(1.1+(p.ov>=80?.15:0))*10)/10;return `<div class="pr">${pb(p)}<span class="pn">${esc(p.n)}</span><span class="ag">${p.ag}</span><b class="ov">${p.ov}</b><button class="sm" onclick="renewP(${p.id},${w})">3年 ${fm(w)}</button><button class="sm s" onclick="relP(${p.id})">退団</button></div>`}).join('')}<div style="font-size:11px;color:var(--mu)">開幕までに更新しない選手は退団します。</div></div>`;
+ if(fin)h+=`<div class="c"><h2>シーズン終了</h2><div class="msg">${rk}位でフィニッシュ</div><button class="main" onclick="doEnd()">シーズン総括・オフシーズンへ<small>選手の成長・引退・新星の入団が行われます</small></button></div>`;
+ else{const o=f?W.cl[f[0]==W.me?f[1]:f[0]]:null;h+=`<div class="c"><h2>次の試合</h2>${o?`<div class="sc"><div>${emb(me.e,40)}</div><b style="font-size:15px">${f[0]==W.me?'HOME':'AWAY'}　vs</b><div>${emb(o.e,40)}</div></div><div class="st">${esc(o.n)}（総合${o.r}・現在${T.indexOf(o)+1}位）　戦力差 ${(ovr(W.me)-ovr(o.id)).toFixed(1)}</div>`:'試合なし'}<button class="main" onclick="adv(1)">試合を行う<small>第${W.md+1}節 / 全${tot}節</small></button><div class="two"><button class="s" onclick="adv(5)">5節進める</button><button class="s" onclick="adv(99)">最後まで</button></div></div>`}
+ h+=`<div class="c"><h2>状況</h2><div class="st">順位 ${rk}位 / 勝点${me.t.p}（${me.t.w}勝${me.t.d}分${me.t.l}敗）　目標：${Math.max(1,Math.ceil(W.cl.filter(c=>c.lg==me.lg&&c.r>me.r).length*.85+1))}位以内</div>${W.last?`<button class="s" onclick="showMatch()">前節 ${W.last.gh}-${W.last.ga}（${esc(W.cl[W.last.h].n)} vs ${esc(W.cl[W.last.a].n)}）</button>`:''}</div><div class="c"><h2>ニュース</h2>${W.log.slice(0,12).map(x=>`<div class="ev">${esc(x)}</div>`).join('')}</div>`;return h}
+function renewP(id,w){const p=W.pl.find(x=>x.id==id);p.w=w;p.yr=3;W.exp=W.exp.filter(x=>x!=id);log(`${p.n}と3年契約を更新`);save();render()}
+function relP(id){const p=W.pl.find(x=>x.id==id);p.c=-1;W.exp=W.exp.filter(x=>x!=id);W._m=null;log(`${p.n}が退団`);save();render()}
+function doEnd(){const m=endSeason();save();render();if(!W.fired)modal(`<h3>シーズン総括</h3><p>${esc(m)}</p><p style="font-size:13px;color:var(--mu)">選手が成長・引退し、新たな才能が各クラブに加わりました。ニュースで確認しましょう。</p>`)}
+function fired(){const me=W.cl[W.me],cs=W.cl.filter(c=>c.r<=me.r&&c.id!=W.me).sort(()=>Math.random()-.5).slice(0,5);$('#app').innerHTML=`<h1>解任…</h1><div class="c"><p>信頼度が底をつき、${esc(me.n)}の監督を解任されました。</p></div><div class="c"><h2>新たなオファー</h2>${cs.map(c=>`<div class="cr" onclick="newJob(${c.id})">${emb(c.e,40)}<div><b>${esc(c.n)}</b><small>${LG[c.lg].n}</small></div><span class="rt">${c.r}</span></div>`).join('')}</div>`}
+function newJob(id){W.me=id;W.fired=false;W.conf=50;W.cash=W.cl[id].rev*.2;W.xo={};W.exp=[];log(`${W.cl[id].n}の監督に就任`);save();render()}
+function squadP(){const s=sq(W.me).sort((a,b)=>PRI[a.po]-PRI[b.po]||b.ov-a.ov);return `<div class="c"><h2>選手（${s.length}人・年俸総額 ${fm(s.reduce((a,p)=>a+p.w,0))}）</h2>${s.map(p=>row(p,`pm(${p.id})`,`<span class="ag">${p.pt>p.ov&&p.ag<24?'↑'+p.pt:''}</span>${p.ij?`<span class="ij">🩹${p.ij}</span>`:bar(p.cd)}`)).join('')}</div>`}
+function pm(id){const p=W.pl.find(x=>x.id==id),own=p.c==W.me;modal(`<h3>${esc(p.n)}</h3><div class="st">${p.po}／${p.ag}歳／総合${p.ov}／潜在${own||p.pe==null?p.pt:p.pe}${p.pt>=90&&p.ag<=21?' 🌟神童':''}</div><div class="st">市場価値 ${fm(val(p))}／年俸 ${fm(p.w)}／契約残${p.yr}年／今季 ${p.ap}試合 ${p.g}G ${p.a}A</div>${own?`<button onclick="sellM(${p.id})">売却オファーを募る</button><button onclick="ext(${p.id})">契約延長（4年）</button><button class="s" onclick="relF(${p.id})">契約解除（違約金あり）</button>`:`<button onclick="nego(${p.id})">獲得交渉</button>`}`)}
+function ext(id){const p=W.pl.find(x=>x.id==id),w=Math.round(p.w*1.2*10)/10;p.w=w;p.yr=4;log(`${p.n}と契約延長（年俸${fm(w)}）`);save();modal();render()}
+function relF(id){const p=W.pl.find(x=>x.id==id),fee=p.w*Math.max(0,p.yr)*.5;W.cash-=fee;p.c=-1;W._m=null;log(`${p.n}を契約解除（違約金${fm(fee)}）`);save();modal();render()}
+function sellM(id){const p=W.pl.find(x=>x.id==id);if(!win()){modal('<p>移籍市場が閉じています（売却できるのはオープン中のみ）。</p>');return}
+ const cs=W.cl.filter(c=>c.id!=W.me&&c.r>=p.ov-12).sort(()=>Math.random()-.5).slice(0,RI(0,2)),eu=p.ov>=62&&p.ag<=31?[...Array(RI(1,2))].map(()=>pk(EUROS)):[];
+ modal(`<h3>${esc(p.n)}への売却オファー</h3>${cs.map(c=>{const f=Math.round(val(p)*R(.8,1.3)*10)/10;return `<div class="pr">${emb(c.e,30)}<span class="pn">${esc(c.n)}</span><b>${fm(f)}</b><button class="sm" onclick="sell(${p.id},${c.id},${f})">売却</button></div>`}).join('')}${eu.map(n=>{const f=Math.round(val(p)*R(.9,1.7)*10)/10;return `<div class="pr"><span class="pn">🌍 ${esc(n)}</span><b>${fm(f)}</b><button class="sm" onclick="sellE(${p.id},'${n}',${f})">売却</button></div>`}).join('')}${cs.length+eu.length?'':'<p>買い手が現れませんでした。</p>'}`)}
+function sellE(pid,n,f){const p=W.pl.find(x=>x.id==pid);p.c=-4;p.oc=n;p.w=wage(p);p.yr=RI(3,5);W.cash+=f;W._m=null;W.xo={};log(`${p.n}が${n}へ海外移籍（${fm(f)}）`);save();modal();render()}
+function sell(pid,cid,f){const p=W.pl.find(x=>x.id==pid);p.c=cid;p.yr=RI(2,4);W.cash+=f;W._m=null;W.xo={};log(`${p.n}を${W.cl[cid].n}へ売却（${fm(f)}）`);save();modal();render()}
+function tac(){const me=W.cl[W.me],F=FM[me.f],x=xi(W.me);return `<div class="c"><h2>フォーメーション</h2><div class="tb">${Object.keys(FM).map(k=>`<button class="tg ${k==me.f?'on':''}" onclick="W.cl[W.me].f='${k}';W.xo={};render()">${k}</button>`).join('')}</div><h2 style="margin-top:10px">スタイル</h2><div class="tb">${['守備的','バランス','攻撃的'].map((n,i)=>`<button class="tg ${me.st==i?'on':''}" onclick="W.cl[W.me].st=${i};render()">${n}</button>`).join('')}</div><h2 style="margin-top:10px">プレス強度（強いほど疲労・怪我増）</h2><div class="tb">${['低い','普通','高い'].map((n,i)=>`<button class="tg ${me.pr==i?'on':''}" onclick="W.cl[W.me].pr=${i};render()">${n}</button>`).join('')}</div></div><div class="c"><h2>スタメン（タップで変更）　チーム総合 ${ovr(W.me).toFixed(1)}</h2>${F.map((s,k)=>{const e=x.find((_,i)=>0)||null;return ''}).join('')}${xiRows()}<button class="s" onclick="W.xo={};render()">スタメンを自動に戻す</button></div>`}
+function xiRows(){const me=W.cl[W.me],F=FM[me.f],x=xi(W.me),used={};return F.map((s,k)=>{const it=x.find((v,i)=>v.s==s&&!used[i]&&(used[i]=1));const p=it&&it.p;return p?`<div class="pr" onclick="slot(${k})"><b class="pb ${s}">${s}</b><span class="pn">${esc(p.n)}${p.po!=s?'<em>'+p.po+'</em>':''}</span><span class="ag">${p.ag}</span><b class="ov">${Math.round(eff(p,s))}</b>${bar(p.cd)}</div>`:`<div class="pr" onclick="slot(${k})"><b class="pb ${s}">${s}</b><span class="pn">（選手不足）</span></div>`}).join('')}
+function slot(k){const s=FM[W.cl[W.me].f][k],ps=sq(W.me).filter(p=>!p.ij).sort((a,b)=>eff(b,s)-eff(a,s));modal(`<h3>${s}の選手を選ぶ</h3>${ps.slice(0,18).map(p=>row(p,`setS(${k},${p.id})`,`<span class="ag">${Math.round(eff(p,s))}</span>${bar(p.cd)}`)).join('')}`)}
+function setS(k,id){for(const q in W.xo)if(W.xo[q]==id)delete W.xo[q];W.xo[k]=id;modal();render()}
+function trP(){const S=UI.sub;let h=`<div class="tb">${[['buy','獲得'],['sell','売却'],['scout','スカウト'],['fa','フリー']].map(([k,n])=>`<button class="tg ${S==k?'on':''}" onclick="UI.sub='${k}';render()">${n}</button>`).join('')}</div><div class="st">${win()?'🟢 移籍市場オープン中':'🔴 移籍市場クローズ中（フリー選手と神童のみ獲得可）'}　予算 ${fm(W.cash)}</div>`;
+ if(S=='buy'){const f=UI.f;let l=W.pl.filter(p=>(p.c>=0||p.c==-4)&&p.c!=W.me&&p.ov>=f.ov&&p.ag<=f.age&&(!f.pos||p.po==f.pos)&&(!f.lg||(f.lg=='海外'?p.c==-4:p.c>=0&&W.cl[p.c].lg==f.lg))).sort((a,b)=>b.ov-a.ov).slice(0,30);
+  h+=`<div class="c"><div class="two"><select onchange="UI.f.pos=this.value;render()"><option value="">全ポジション</option>${Object.keys(PN).map(k=>`<option ${f.pos==k?'selected':''}>${k}</option>`).join('')}</select><select onchange="UI.f.lg=this.value;render()"><option value="">全リーグ</option>${[...Object.keys(LG),'海外'].map(k=>`<option value="${k}" ${f.lg==k?'selected':''}>${k=='海外'?'海外クラブ':LG[k].n}</option>`).join('')}</select></div><label>最低総合 ${f.ov}<input type="range" min="50" max="90" value="${f.ov}" onchange="UI.f.ov=+this.value;render()"></label><label>最高年齢 ${f.age}<input type="range" min="17" max="40" value="${f.age}" onchange="UI.f.age=+this.value;render()"></label></div><div class="c">${l.map(p=>row(p,`nego(${p.id})`,`<span class="ag">${esc(p.c>=0?W.cl[p.c].cd:p.oc||'-')}</span><span class="ag">${fm(val(p))}</span>`)).join('')||'該当なし'}</div>`}
+ else if(S=='sell')h+=`<div class="c">${sq(W.me).sort((a,b)=>b.ov-a.ov).map(p=>row(p,`sellM(${p.id})`,`<span class="ag">${fm(val(p))}</span>`)).join('')}</div>`;
+ else if(S=='fa'){const l=W.pl.filter(p=>p.c==-1).sort((a,b)=>b.ov-a.ov).slice(0,25);h+=`<div class="c">${l.map(p=>row(p,`nego(${p.id})`,`<span class="ag">${fm(wage(p))}</span>`)).join('')||'フリー選手はいません'}</div>`}
+ else h+=`<div class="c"><h2>スカウト網 Lv${W.sk}/5</h2><div class="st">レベルが高いほど多くの候補が見つかり、潜在能力の見積もり精度も上がります。</div>${W.sk<5?`<button class="s" onclick="upSk()">スカウト網を強化（${fm(.6*W.sk)}）</button>`:''}<div class="tb" style="margin-top:8px">${Object.keys(REG).map(k=>`<button class="tg" onclick="scoutR('${k}')">${k}を調査（${fm(.15)}）</button>`).join('')}</div></div><div class="c"><h2>調査結果</h2>${W.sc.map(id=>W.pool.find(x=>x.id==id)).filter(Boolean).map(p=>`<div class="pr" onclick="nego(${p.id})">${pb(p)}<span class="pn">${esc(p.n)}${p.pe>=90?' 🌟':''}<em>${p.rg}</em></span><span class="ag">${p.ag}歳</span><b class="ov">${p.ov}</b><span class="ag">潜${p.pe}</span></div>`).join('')||'地域を選んで調査しよう。神童が見つかるかも。'}</div>`;return h}
+function upSk(){const c=.6*W.sk;if(W.cash<c)return modal('<p>予算不足</p>');W.cash-=c;W.sk++;save();render()}
+function scoutR(rg){if(W.cash<.15)return modal('<p>予算不足</p>');W.cash-=.15;const l=W.pool.filter(p=>p.rg==rg).sort(()=>Math.random()-.5).slice(0,2+W.sk);for(const p of l)p.pe=p.pt+RI(-(6-W.sk),6-W.sk);W.sc=l.map(p=>p.id);const g=l.filter(p=>p.pe>=88).length;log(`${rg}を調査：${l.length}人の候補${g?`（神童の可能性${g}人！）`:''}`);save();render()}
+const fp=id=>W.pl.find(x=>x.id==id)||W.pool.find(x=>x.id==id);
+function nego(id){const p=fp(id);if(!p)return;const youth=p.c==-3&&p.ag<=20,fa=p.c==-1,fee=youth?Math.round((.3+Math.pow(Math.max(0,(p.pe||p.pt)-70),2)*.018)*10)/10:fa?0:Math.round(val(p)*(p.c==-4?1.3:1.15)*10)/10;
+ if(!youth&&!fa&&!win())return modal('<p>移籍市場が閉じています。冬の市場（シーズン中盤）か夏のプレシーズンを待とう。</p>');
+ modal(`<h3>${esc(p.n)}</h3><div class="st">${p.po}／${p.ag}歳／総合${p.ov}／潜在${p.pe!=null?p.pe:p.pt}${p.c>=0?'／所属 '+esc(W.cl[p.c].n):p.oc?'／所属 '+esc(p.oc)+'（海外）':''}</div><div class="st">基準移籍金 ${fm(fee)}／希望年俸 ${fm(youth?.3:wage(p)*1.2)}</div>${fee>0?`<label>移籍金のオファー<select id="nf"><option value="1">標準（${fm(fee)}）</option><option value="1.3">上乗せ（${fm(fee*1.3)}）</option><option value="1.7">破格（${fm(fee*1.7)}）</option></select></label>`:''}<label>年俸のオファー<select id="nw"><option value="1">標準</option><option value="1.4">高給 ×1.4</option><option value="1.8">破格 ×1.8</option></select></label><button class="main" onclick="doBuy(${p.id},${fee})">オファーする</button>`)}
+function doBuy(id,fee){const p=fp(id),m=$('#nf')?+$('#nf').value:1,wm=+$('#nw').value,f=fee*m,me=W.cl[W.me],youth=p.c==-3&&p.ag<=20,their=p.c>=0?W.cl[p.c].r:p.c==-4?85:70,eu=p.c==-4;
+ if(W.cash-f<-me.rev*.3)return modal('<p>予算が足りません（借入限度を超えます）。</p>');
+ const sp=(p.c>=0||eu)?C(.4+(m-1)*.6-(p.ov>=85?.2:0)-(their>=88?.1:0)+(eu&&p.ag>=33?.25:0),.05,.95):1,pa=eu?C(.12+(wm-1)*.5+(p.ag>=33?.3:0)+(p.jp?.25:0)+(me.lg=='J1'?.04:0),.03,.92):C(.55+(me.r-their)/35+(wm-1)*.45,.05,.95);const nw=sq(W.me).reduce((a,q)=>a+q.w,0)+wage(p)*1.2*wm;if(nw>me.rev*.85)return modal('<p>年俸総額がクラブの収入を大きく超えてしまうため、獲得できません。</p>');
+ const ok1=ch(sp),ok2=ch(youth?C(.5+(me.r-72)/30,.1,.95):pa);
+ if(!ok1)return modal(`<p>${p.c>=0?esc(W.cl[p.c].n):p.oc?esc(p.oc):'相手'}は提示額に応じませんでした。</p>`);if(!ok2)return modal(`<p>${esc(p.n)}は移籍に乗り気ではありませんでした（クラブの格や年俸が決め手）。</p>`);
+ W.cash-=f;p.c=W.me;p.w=youth?.3:Math.round(wage(p)*1.2*wm*10)/10;p.yr=youth?4:RI(3,5);delete p.rg;W.pool=W.pool.filter(x=>x.id!=p.id);if(!W.pl.includes(p))W.pl.push(p);W.sc=W.sc.filter(x=>x!=p.id);W._m=null;if(p.pt>=90&&p.ag<=20)W.tro.push(W.y+' 神童獲得：'+p.n);
+ log(`${p.n}（${p.ag}歳 ${p.po}）を${fm(f)}で獲得！`);save();modal(`<h3>🎉 契約成立！</h3><p>${esc(p.n)}が加入しました。</p>`);render()}
+function tblP(){const lg=UI.lg=W.cl[W.me].lg==UI.lg||UI.tl?UI.lg:UI.lg,T=tbl(lg),me=W.cl[W.me];const sc=W.pl.filter(p=>p.c>=0&&W.cl[p.c].lg==lg).sort((a,b)=>b.g-a.g).slice(0,10);
+ return `<div class="tb">${Object.keys(LG).map(k=>`<button class="tg ${k==lg?'on':''}" onclick="UI.lg='${k}';render()">${k}</button>`).join('')}</div><div class="c"><h2>${LG[lg].n}</h2><table><tr><th>#</th><th></th><th>試</th><th>勝</th><th>分</th><th>敗</th><th>得失</th><th>点</th></tr>${T.map((c,i)=>`<tr class="${c.id==W.me?'me':''}"><td>${i+1}</td><td class="tl">${esc(c.n)}</td><td>${c.t.w+c.t.d+c.t.l}</td><td>${c.t.w}</td><td>${c.t.d}</td><td>${c.t.l}</td><td>${c.t.gf-c.t.ga}</td><td><b>${c.t.p}</b></td></tr>`).join('')}</table></div><div class="c"><h2>得点ランキング</h2>${sc.map((p,i)=>`<div class="pr"><span class="ag">${i+1}</span><span class="pn">${esc(p.n)}<em>${esc(W.cl[p.c].cd)}</em></span><b class="ov">${p.g}</b></div>`).join('')}</div>`}
+function clubP(){const me=W.cl[W.me],e=me.e,wb=sq(W.me).reduce((a,p)=>a+p.w,0);return `<div class="c" style="text-align:center"><div id="ep">${emb(e,110)}</div></div><div class="c"><h2>エンブレム＆クラブ名</h2><label>クラブ名<input value="${esc(me.n)}" maxlength="20" oninput="W.cl[W.me].n=this.value||'無名FC'"></label><label>略称（3文字）<input value="${esc(e.tx)}" maxlength="3" oninput="W.cl[W.me].e.tx=this.value.toUpperCase();ep()"></label><div class="two"><select onchange="W.cl[W.me].e.sh=this.value;ep()">${[['shield','盾型'],['round','円形'],['sq','角丸'],['hex','六角']].map(([k,n])=>`<option value="${k}" ${e.sh==k?'selected':''}>${n}</option>`).join('')}</select><select onchange="W.cl[W.me].e.pt=this.value;ep()">${[['p','無地'],['v','縦割り'],['s','ストライプ'],['h','横割り'],['d','斜め'],['b','横帯']].map(([k,n])=>`<option value="${k}" ${e.pt==k?'selected':''}>${n}</option>`).join('')}</select></div><div class="two"><label>メインカラー<input type="color" value="#${e.c1}" oninput="W.cl[W.me].e.c1=this.value.slice(1);ep()"></label><label>サブカラー<input type="color" value="#${e.c2}" oninput="W.cl[W.me].e.c2=this.value.slice(1);ep()"></label></div><div class="ics">${ICS.map(i=>`<button class="ic" onclick="W.cl[W.me].e.ic='${i}';ep()">${i}</button>`).join('')}</div></div><div class="c"><h2>財政</h2><div class="st">年間収入 約${fm(me.rev)}／年俸総額 ${fm(wb)}／資金 ${fm(W.cash)}</div><div class="st">スカウト網 Lv${W.sk}／経営陣の信頼度 ${Math.round(W.conf)}</div></div><div class="c"><h2>実績</h2>${W.tro.map(t=>`<div class="ev">🏆 ${esc(t)}</div>`).join('')||'<div class="ev">まだタイトルはありません</div>'}${W.hist.map(h=>`<div class="ev">${h.y}：${esc(h.club)} ${h.rk}位（勝点${h.p}）</div>`).join('')}</div><div class="c"><button class="s" onclick="save();modal('<p>セーブしました</p>')">セーブ</button><button class="s" onclick="if(confirm('最初からやり直しますか？')){init();render()}">最初からやり直す</button></div>`}
+function ep(){$('#ep').innerHTML=emb(W.cl[W.me].e,110);save()}
+
+if(!load()){init()}render();</script></body></html>
